@@ -26,7 +26,12 @@ class OmnivaApplicationTests {
 
     @Test
     void checkUsedBarcode() {
-        assertFalse(controller.isUsed("THISISAUSEDBARCODE"));
+        assertTrue(controller.isUsed("THISISAUSEDBARCODE"));
+    }
+
+    @Test
+    void checkNotUsedBarcode() {
+        assertFalse(controller.isUsed("THISISANOTUSEDBARCODE"));
     }
 
 }
