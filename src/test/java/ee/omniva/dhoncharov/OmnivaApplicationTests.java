@@ -21,12 +21,12 @@ class OmnivaApplicationTests {
 
     @Test
     void checkEmptyBarcode() {
-        assertThrows(ResponseStatusException.class, () -> controller.checkBarcode(""));
+        assertThrows(ResponseStatusException.class, () -> controller.isUsed(""));
     }
 
     @Test
     void checkUsedBarcode() {
-        assertFalse(controller.checkBarcode("THISISAUSEDBARCODE"));
+        assertFalse(controller.isUsed("THISISAUSEDBARCODE"));
     }
 
 }
