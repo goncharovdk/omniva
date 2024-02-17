@@ -1,5 +1,7 @@
 package ee.omniva.dhoncharov.beans;
 
+import jakarta.annotation.PostConstruct;
+import jakarta.annotation.PreDestroy;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,7 @@ public class DatabaseService {
 
     Connection conn = null;
 
+    @PostConstruct
     public void connect() {
         try {
             conn = DriverManager.getConnection(connectionString);
@@ -25,6 +28,7 @@ public class DatabaseService {
         return conn != null;
     }
 
+    @PreDestroy
     public void disconnect() {
         try {
             if (isConnected()) {
@@ -47,6 +51,21 @@ public class DatabaseService {
             throw new RuntimeException(e.getMessage());
         }
         return result;
+    }
+
+    public boolean isBarcodeInDb(String barcode) {
+        int result;
+        String query = "SELECT COUNT(*) AS count FROM shipments where barcode = ?";
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, barcode);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            result = rs.getInt("count");
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return (result != 0);
     }
 
 }

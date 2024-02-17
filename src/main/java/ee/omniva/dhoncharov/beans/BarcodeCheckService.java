@@ -2,6 +2,7 @@ package ee.omniva.dhoncharov.beans;
 
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,6 @@ public class BarcodeCheckService {
 
     private BloomFilter<String> filter;
 
-    public BarcodeCheckService() {
-        // TODO: calculate expected insertions
-        initBloomFilter(5, 0.01);
-    }
-
     public boolean isValidBarcode(String barcode) {
         int len = barcode.length();
         return (len >= 13) && (len <= 25);
@@ -30,17 +26,21 @@ public class BarcodeCheckService {
     }
 
     public boolean isInDatabase(String barcode) {
-        // TODO: Return proper value
-        return true;
+        return database.isBarcodeInDb(barcode);
     }
 
-    private void initBloomFilter(int expectedInsertions, double fpp) {
+    @PostConstruct
+    private void initBloomFilter() {
+
+        final double falsePositiveProbability = 0.01;
+        int expectedInsertions = database.getShipmentCount();
+
         filter = BloomFilter.create(
                 Funnels.stringFunnel(StandardCharsets.UTF_8),
                 expectedInsertions,
-                fpp);
+                falsePositiveProbability);
 
-        // TODO: Load all barcodes
+        // TODO: Load all barcodes from the DB
         filter.put("THISISAUSEDBARCODE");
     }
 }

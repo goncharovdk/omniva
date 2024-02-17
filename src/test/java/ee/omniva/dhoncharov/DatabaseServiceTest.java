@@ -14,19 +14,12 @@ class DatabaseServiceTest {
     DatabaseService database;
 
     @Test
-    void testConnect() {
-        database.connect();
-        database.disconnect();
+    void testCount() {
+        assertEquals(1, database.getShipmentCount());
     }
 
     @Test
-    void testCount() {
-        int shipmentCount;
-
-        database.connect();
-        shipmentCount = database.getShipmentCount();
-        database.disconnect();
-
-        assertEquals(1, shipmentCount);
+    void testIsBarcodeInDb() {
+        assertTrue(database.isBarcodeInDb("THISISAUSEDBARCODE"));
     }
 }
