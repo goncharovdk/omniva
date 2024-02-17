@@ -1,6 +1,6 @@
 
 - SQLite is used as a development database just to do it fast. In a 
-  real-world situation I'd use a real DB server. 
+  real-world situation I'd use a real DB server and different datatypes. 
 - I added some tables, fields and indices to the database, but this is for 
   illustration only, and far away from a real DB design. But it's 
   no-nonsense though.   

@@ -30,6 +30,7 @@ public class BarcodeCheckService {
     }
 
     public boolean isInDatabase(String barcode) {
+        // TODO: Return proper value
         return true;
     }
 

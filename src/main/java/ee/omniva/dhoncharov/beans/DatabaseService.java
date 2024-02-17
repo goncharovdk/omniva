@@ -3,9 +3,7 @@ package ee.omniva.dhoncharov.beans;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 @Service
 public class DatabaseService {
@@ -31,10 +29,24 @@ public class DatabaseService {
         try {
             if (isConnected()) {
                 conn.close();
+                conn = null;
             }
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public int getShipmentCount() {
+        int result;
+        String query = "SELECT COUNT(*) AS count FROM shipments";
+        try (Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+            rs.next();
+            result = rs.getInt("count");
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return result;
     }
 
 }
