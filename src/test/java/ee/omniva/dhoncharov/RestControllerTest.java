@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class RestControllerTests {
+class RestControllerTest {
 
     @Autowired
     BarcodeCheckRestController controller;
@@ -33,5 +33,4 @@ class RestControllerTests {
     void checkNotUsedBarcode() {
         assertFalse(controller.isUsed("THISISANOTUSEDBARCODE"));
     }
-
 }
