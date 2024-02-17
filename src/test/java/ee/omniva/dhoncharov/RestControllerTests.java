@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class OmnivaApplicationTests {
+class RestControllerTests {
 
     @Autowired
     BarcodeCheckRestController controller;

@@ -2,6 +2,7 @@ package ee.omniva.dhoncharov.beans;
 
 import com.google.common.hash.BloomFilter;
 import com.google.common.hash.Funnels;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
@@ -9,9 +10,13 @@ import java.nio.charset.StandardCharsets;
 @Service
 public class BarcodeCheckService {
 
+    @Autowired
+    DatabaseService database;
+
     private BloomFilter<String> filter;
 
     public BarcodeCheckService() {
+        // TODO: calculate expected insertions
         initBloomFilter(5, 0.01);
     }
 
