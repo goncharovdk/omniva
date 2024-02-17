@@ -73,7 +73,7 @@ public class DatabaseService {
         try (Statement stmt = conn.createStatement()) {
             ResultSet rs = stmt.executeQuery(query);
 
-            // NB: Supposedly, fetch size to be set here, as 500 mln records implied.
+            // TODO: Supposedly, fetch size to be set here, as 500 mln records implied.
             // rs.setFetchSize(10000);
 
             while (rs.next()) {

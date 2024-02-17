@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.Map;
+
 @RestController
 public class BarcodeCheckRestController {
 
     @Autowired
     BarcodeCheckService service;
 
-    @GetMapping("/isused")
-    public boolean isUsed(@RequestParam("barcode") String barcode) {
+    public boolean isBarcodeUsed(String barcode) {
         if (!service.isValidBarcode(barcode)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid barcode");
         }
@@ -26,5 +28,10 @@ public class BarcodeCheckRestController {
             // Additional check needed for possible false positive
             return service.isInDatabase(barcode);
         }
+    }
+
+    @GetMapping("/isused")
+    public Map isUsed(@RequestParam("barcode") String barcode) {
+        return Collections.singletonMap("used", isBarcodeUsed(barcode));
     }
 }

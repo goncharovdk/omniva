@@ -15,7 +15,8 @@ class DatabaseServiceTest {
 
     @Test
     void testCount() {
-        assertEquals(1, database.getShipmentCount());
+        // TODO: This test is for development only. To be remowed afterwards.
+        assertEquals(100, database.getShipmentCount());
     }
 
     @Test

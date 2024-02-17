@@ -1,30 +1,24 @@
-openapi: 3.0.3
+openapi: "3.0.3"
 info:
-  title: Barcode check API
-  description: An API if the provided barcode is already used.
-  version: 1.0.0
+  title: "Barcode Check API"
+  description: "Check it the provided barcode is already used."
+  version: "1.0.0"
 servers:
-  - url: http://omniva.ee/barcode
+  - url: "http://localhost:8080"
 paths:
   /isused:
-    post:
-      summary: Check if the barcode is used
-      description: This endpoint checks if the provided barcode is used.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                value:
-                  type: string
-                  description: The barcode
-              required:
-                - value
+    get:
+      summary: "GET isused"
+      operationId: "isUsed"
+      parameters:
+        - name: "barcode"
+          in: "query"
+          required: true
+          schema:
+            type: "string"
       responses:
         '200':
-          description: Success response
+          description: OK
           content:
             application/json:
               schema:
@@ -32,9 +26,7 @@ paths:
                 properties:
                   used:
                     type: boolean
-                    description: Indicates whether the barcode is used or not
+                    description: "Indicates whether the barcode is used or not."
         '400':
-          description: Bad request, value is missing or invalid
-        '500':
-          description: Internal server error
+          description: Bad request, value is missing or invalid.
 
