@@ -40,7 +40,16 @@ public class BarcodeCheckService {
                 expectedInsertions,
                 falsePositiveProbability);
 
-        // TODO: Load all barcodes from the DB
-        filter.put("THISISAUSEDBARCODE");
+        loadAllBarcodes();
+    }
+
+    public void loadBarcode(String barcode) {
+       // NB: This method is public, as the filter is to be updated
+       // from outside when new shipments are added to the database.
+        filter.put(barcode);
+    }
+
+    private void loadAllBarcodes() {
+        database.provideBarcodes(this);
     }
 }

@@ -68,4 +68,19 @@ public class DatabaseService {
         return (result != 0);
     }
 
+    public void provideBarcodes(BarcodeCheckService service) {
+        String query = "SELECT barcode FROM shipments";
+        try (Statement stmt = conn.createStatement()) {
+            ResultSet rs = stmt.executeQuery(query);
+
+            // NB: Supposedly, fetch size to be set here, as 500 mln records implied.
+            // rs.setFetchSize(10000);
+
+            while (rs.next()) {
+                service.loadBarcode(rs.getString("barcode"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
 }
